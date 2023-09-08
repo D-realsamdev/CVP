@@ -4,7 +4,7 @@ import  blogSlice  from './features/blogSlice';
 
 export const store = configureStore({
   reducer: {
-    blogs:blogSlice,
+    // blogs:blogSlice,
     // auth:AuthProvider(),
   },
 })
