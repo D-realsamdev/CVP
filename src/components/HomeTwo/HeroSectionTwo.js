@@ -4,9 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import CertificateModal from "./responseModal";
 
 const HeroSectionTwo = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [certificateData, setCertificateData] = useState("");
-  const [firstPieceOfData, setFirstPieceOfData] = useState(""); // Define firstPieceOfData
+  const [showModal, setShowModal] = useState(false); // Define firstPieceOfData
   const [secondPieceOfData, setSecondPieceOfData] = useState(""); // Define secondPieceOfData
   const baseUrl = "https://smart.pythonanywhere.com";
   const verifyCertificate = async (e) => {
@@ -33,7 +31,7 @@ const HeroSectionTwo = () => {
         toast.success("Certificate verified successfully");
         // Extract the two pieces of data you need from the 'data' object
         const certificateImageUrl = baseUrl + data.certificate_image;
-      openModal(data.student_name, certificateImageUrl);
+      openModal(certificateImageUrl);
       } else {
         const errorMessage = await response.text(); // Get error message from response
         console.error(`Certificate verification failed: ${errorMessage}`);
@@ -50,8 +48,7 @@ const HeroSectionTwo = () => {
   //       setSecondPieceOfData(baseUrl+secondPieceOfData);
   //   setShowModal(true);
   // };
-  const openModal = (studentName, certificateImageUrl) => {
-    setFirstPieceOfData(studentName);
+  const openModal = (certificateImageUrl) => {
     setSecondPieceOfData(certificateImageUrl);
     setShowModal(true);
   };
@@ -142,7 +139,6 @@ const HeroSectionTwo = () => {
       <CertificateModal
         show={showModal}
         handleClose={closeModal}
-        firstPieceOfData={firstPieceOfData}
         secondPieceOfData={secondPieceOfData}
       />
     </div>
