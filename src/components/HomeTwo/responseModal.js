@@ -1,5 +1,5 @@
-import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React from "react";
+import { Modal, Button } from "react-bootstrap";
 
 const CertificateModal = ({ show, handleClose, secondPieceOfData }) => {
   return (
@@ -8,7 +8,19 @@ const CertificateModal = ({ show, handleClose, secondPieceOfData }) => {
         <Modal.Title>Certificate Verification Result</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <img src={secondPieceOfData} alt='' width='200px' height='300px' className='mx-auto'/>
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+              <img
+                src={secondPieceOfData}
+                alt=""
+                width="200px"
+                height="300px"
+                className="mx-auto"
+              />
+            </div>
+          </div>
+        </div>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
