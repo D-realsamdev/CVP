@@ -35,7 +35,7 @@ const HeroSectionTwo = () => {
       } else {
         const errorMessage = await response.text(); // Get error message from response
         console.error(`Certificate verification failed: ${errorMessage}`);
-        toast.error("Certificate verification failed");
+        toast.error(errorMessage);
       }
     } catch (error) {
       console.error("An error occurred while verifying the certificate", error);
