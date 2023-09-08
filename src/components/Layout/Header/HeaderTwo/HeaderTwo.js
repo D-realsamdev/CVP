@@ -57,18 +57,18 @@ const HeaderTwo = () => {
                                     <div className="main-menu mr-30 d-none d-xl-block">
                                         <nav id="mobile-menu">
                                             <ul>
-                                                <li className="menu-item"><Link href="/"><a>Home</a></Link>
+                                                <li className="menu-item"><Link href="#about"><a>About</a></Link>
                                                 </li>
                                         
                                             </ul>
                                         </nav>
                                     </div>
-                                    <div className="header-btn">
+                                    {/* <div className="header-btn">
                                         <div className="cart-wrapper mr-45">
                                           
                                         </div>
                                         <span className="edu-four-btn d-none d-lg-block" onClick={() => {setSignInOpen(!signinOpen)}}>Lecturer Login</span>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>

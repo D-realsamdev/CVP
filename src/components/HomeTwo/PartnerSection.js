@@ -2,7 +2,7 @@ import React from "react";
 
 const PartnerSection = () => {
   return (
-    <div className="patner-area pt-110 pb-80">
+    <div className="patner-area pt-110 pb-80" id='about'>
       <div className="container">
         <div className="row">
           <div className="col-xl-6 col-lg-6 col-md-6">
