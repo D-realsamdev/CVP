@@ -49,7 +49,7 @@ const HeaderTwo = () => {
                         <div className="row align-items-center">
                             <div className="col-3 col-lg-3 col-md-3 col-sm-3 col-3">
                                 <div className="header-logo">
-                                    <Link href="/"><a><h4 style={{color:"blue"}}>CeRtiFyChEck</h4></a></Link>
+                                    <Link href="/"><a><h2 style={{color:"black"}}>CeRtiFyChEck</h2></a></Link>
                                 </div>
                             </div>
                             <div className="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
