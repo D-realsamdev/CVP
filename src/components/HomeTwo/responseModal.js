@@ -10,12 +10,12 @@ const CertificateModal = ({ show, handleClose, secondPieceOfData }) => {
       <Modal.Body>
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+            <div className="col-lg-10 col-md-10 col-sm-10 col-12">
               <img
                 src={secondPieceOfData}
                 alt=""
-                width="200px"
-                height="300px"
+                width="350px"
+                height="500px"
                 className="mx-auto"
               />
             </div>
