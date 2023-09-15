@@ -4,13 +4,63 @@ import "react-toastify/dist/ReactToastify.css";
 import CertificateModal from "./responseModal";
 
 const HeroSectionTwo = () => {
-  const [showModal, setShowModal] = useState(false); // Define firstPieceOfData
-  const [secondPieceOfData, setSecondPieceOfData] = useState(""); // Define secondPieceOfData
+  const [showModal, setShowModal] = useState(false);
+  const [secondPieceOfData, setSecondPieceOfData] = useState("");
+  const [showGenCode, setShowGenCode] = useState(false);
+  const [showCertifyField, setShowCertifyField] = useState(false);
+
+  const verifyCertificateDIv = (event) => {
+    event.preventDefault();
+    setShowGenCode(true);
+  };
+
   const baseUrl = "https://smart.pythonanywhere.com";
+  const genAccessCode = async (e) => {
+    e.preventDefault();
+    const certificateId = e.target.certificateId.value;
+    const organization_name = e.target.organization_name.value;
+    const email = e.target.email.value;
+    const address = e.target.address.value;
+    try {
+      const response = await fetch(
+        "https://smart.pythonanywhere.com/api/student/generate-access-code/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            certificate_id: certificateId,
+            organization_name: organization_name,
+            email: email,
+            address: address,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        toast.success("Certificate found, check your email for access code");
+        setShowGenCode(false); // Hide the gen-code div
+        setShowCertifyField(true);
+        // Extract the two pieces of data you need from the 'data' object
+        // const certificateImageUrl = baseUrl + data.certificate_image;
+        // openModal(certificateImageUrl);
+      } else {
+        const errorMessage = await response.text(); // Get error message from response
+        console.error(`Certificate verification failed: ${errorMessage}`);
+        toast.error(errorMessage);
+      }
+    } catch (error) {
+      console.error("An error occurred while verifying the certificate", error);
+      toast.error("An error occurred while verifying the certificate");
+    }
+  };
+
   const verifyCertificate = async (e) => {
     e.preventDefault();
     const certificateId = e.target.certificateId.value;
-    const accessCode = e.target.accessCode.value;
+    const access_code = e.target.access_code.value;
     try {
       const response = await fetch(
         "https://smart.pythonanywhere.com/api/student/verify-certificate/",
@@ -21,17 +71,17 @@ const HeroSectionTwo = () => {
           },
           body: JSON.stringify({
             certificate_id: certificateId,
-            access_code: accessCode,
+            access_code: access_code,
           }),
         }
       );
 
       if (response.ok) {
         const data = await response.json();
-        toast.success("Certificate verified successfully");
+        toast.success("Certificate found");
         // Extract the two pieces of data you need from the 'data' object
         const certificateImageUrl = baseUrl + data.certificate_image;
-      openModal(certificateImageUrl);
+        openModal(certificateImageUrl);
       } else {
         const errorMessage = await response.text(); // Get error message from response
         console.error(`Certificate verification failed: ${errorMessage}`);
@@ -81,41 +131,125 @@ const HeroSectionTwo = () => {
                     Verification Portal
                   </h2>
                 </div>
-                <div className="row justify-content-center text-center">
-                  <p>
-                    Simply use the search field below to verify certificate by
-                    entering the certificate ID and access code.
-                  </p>
-                </div>
-                <div
-                  className="slider-search "
-                  style={{ backgroundColor: "white" }}
-                >
-                  <form onSubmit={verifyCertificate}>
-                    <div className="slider-search-icon position-relative">
-                      <div className="row">
-                        <div className="col-lg-6">
-                          <input
-                            type="text"
-                            placeholder="Certificate ID"
-                            name="certificateId"
-                          />
-                        </div>
-                        <div className="col-lg-6">
-                          <input
-                            type="text"
-                            placeholder="Access Code"
-                            name="accessCode"
-                          />
-                        </div>
-                      </div>
-                      <button type="submit">
-                        <i className="far fa-search"></i>
+                {!showGenCode && !showCertifyField &&(
+                  <div className="row justify-content-center text-center">
+                    <div className="col-lg-4 col-md-4 col-sm-6 col-6">
+                      <button
+                        className="btn btn-primary"
+                        onClick={verifyCertificateDIv}
+                      >
+                        Verify Certificate Authencity
                       </button>
                     </div>
-                  </form>
-                </div>
-                <div className="slider-course-content text-center">
+                  </div>
+                )}
+                {showGenCode && (
+                  <div
+                    className="gen-code"
+                    id="gen_code"
+                    style={{ marginTop: "15px" }}
+                  >
+                    <div className="row justify-content-center text-center">
+                      <p>
+                        To Verify certificate authencity please fill the form
+                        below to generate an access code
+                        {/* Simply use the search field below to verify certificate by
+                      entering the certificate ID and access code. */}
+                      </p>
+                    </div>
+                    <div
+                      className="slider-search "
+                      style={{ backgroundColor: "white" }}
+                    >
+                      <form onSubmit={genAccessCode}>
+                        <div className="slider-search-icon position-relative">
+                          <div className="row">
+                            <div className="col-lg-6">
+                              <input
+                                type="text"
+                                placeholder="Certificate ID"
+                                name="certificateId"
+                              />
+                            </div>
+                            <div className="col-lg-6">
+                              <input
+                                type="text"
+                                placeholder="organization_name"
+                                name="organization_name"
+                              />
+                            </div>
+                            <div className="col-lg-6">
+                              <input
+                                type="email"
+                                placeholder="email"
+                                name="email"
+                              />
+                            </div>
+                            <div className="col-lg-6">
+                              <input
+                                type="text"
+                                placeholder="address"
+                                name="address"
+                              />
+                            </div>
+                          </div>
+                          <button type="submit">
+                            <i className="far fa-search"></i>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
+
+                {showCertifyField && (
+                  <div
+                    className="gen-code"
+                    id="gen_code"
+                    style={{ marginTop: "15px" }}
+                  >
+                    <div className="row justify-content-center text-center">
+                      <p>
+                        Use the access code sent to your mail and the
+                        certificate_id to fill the form below
+                        {/* Simply use the search field below to verify certificate by
+                      entering the certificate ID and access code. */}
+                      </p>
+                    </div>
+                    <div
+                      className="slider-search "
+                      style={{ backgroundColor: "white" }}
+                    >
+                      <form onSubmit={verifyCertificate}>
+                        <div className="slider-search-icon position-relative">
+                          <div className="row">
+                            <div className="col-lg-6">
+                              <input
+                                type="text"
+                                placeholder="Certificate ID"
+                                name="certificateId"
+                              />
+                            </div>
+                            <div className="col-lg-6">
+                              <input
+                                type="text"
+                                placeholder="Enter access code"
+                                name="access_code"
+                              />
+                            </div>
+                          </div>
+                          <button type="submit">
+                            <i className="far fa-search"></i>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
+                <div
+                  className="slider-course-content text-center"
+                  style={{ marginTop: "35px" }}
+                >
                   <ul>
                     <li>
                       <i className="fas fa-check-circle"></i>
