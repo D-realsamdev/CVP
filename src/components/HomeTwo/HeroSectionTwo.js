@@ -108,10 +108,7 @@ const HeroSectionTwo = () => {
 
   return (
     <div className="hero-area hero-height d-flex align-items-center position-relative">
-      {/* <img className="hero-shape-5" src="assets/img/shape/shape-02.png" alt="shape"/>
-            <img className="hero-shape-1" src="assets/img/shape/shape-03.png" alt="shape"/>
-            <img className="hero-shape-6" src="assets/img/shape/shape-01.png" alt="shape"/>
-            <img className="hero-shape-7" src="assets/img/shape/shape-10.png" alt="shape"/> */}
+   
       <div className="container">
         <div className="hero-2-content-wrpapper position-relative">
           <div className="hero-shape-3 d-none d-xl-block">
